@@ -4,10 +4,10 @@ from xml.dom import minidom
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element, SubElement
 
-# use requests from botocore so we don't need to package all of requests just for the dict
 # noinspection PyPackageRequirements
 from dateutil.relativedelta import relativedelta
 
+# Just include the case insensitive dict from requests
 from dict_util import CaseInsensitiveDict
 
 # note voted out is not the same as new president is sworn in
@@ -88,7 +88,20 @@ def handler(event, context):
     return resp
 
 
+def main():
+    hello_world = f"""Welcome humans!
+{make_meatbag_response()}
+    
+json:
+{make_json_response(True)}
+{make_json_response(False)}
+
+xml:
+{make_xml_response(True)}
+{make_xml_response(False)}
+"""
+    print(hello_world)
+
+
 if __name__ == '__main__':
-    print(get_time_delta())
-    print(make_xml_response())
-    print(make_json_response())
+    main()
