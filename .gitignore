@@ -1,0 +1,7 @@
+.DS_Store
+**/out/
+**/__pycache__/
+*.pyc
+**/*.iml
+virtualenv/
+venv/

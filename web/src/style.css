@@ -1,0 +1,65 @@
+body {
+    text-align: center;
+    background: #ffffff;
+    font-family: sans-serif;
+    font-weight: 100;
+    padding: 2.5%;
+}
+
+h1 {
+    color: #004130;
+    font-weight: 100;
+    font-size: 40px;
+    margin: 40px 0px 20px;
+}
+
+#tillOutOfOfficeCountDown {
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+}
+
+#tillOutOfOfficeCountDown > div {
+    padding: 10px;
+    border-radius: 3px;
+    background: #00BF96;
+    display: inline-block;
+}
+
+#tillOutOfOfficeCountDown div > span {
+    padding: 15px;
+    border-radius: 3px;
+    background: #004130;
+    display: inline-block;
+}
+
+#tillInOfficeCountDown {
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+}
+
+#tillInOfficeCountDown > div {
+    padding: 10px;
+    border-radius: 3px;
+    background: #bf1d05;
+    display: inline-block;
+}
+
+#tillInOfficeCountDown div > span {
+    padding: 15px;
+    border-radius: 3px;
+    background: #410400;
+    display: inline-block;
+}
+
+.smalltext {
+    padding-top: 5px;
+    font-size: 16px;
+}

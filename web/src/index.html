@@ -1,0 +1,215 @@
+<html lang="en">
+<head>
+    <!-- Google http -->
+    <meta name="google-site-verification" content="VK_AVhG43ujvi2A_c-9kTI8i6ct7ZKzrlAKVtCSe2PA"/>
+    <!-- Google https -->
+    <meta name="google-site-verification" content="VK_AVhG43ujvi2A_c-9kTI8i6ct7ZKzrlAKVtCSe2PA"/>
+    <link rel="shortcut icon" type="image/png"
+          href="https://github.com/JBirdVegas/trump-time/raw/master/web/src/main/resources/trump_bw_492x512.png">
+    <link rel="icon" type="image/png"
+          href="https://github.com/JBirdVegas/trump-time/raw/master/web/src/main/resources/trump_bw_492x512.png">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Till Trump</title>
+</head>
+<body>
+<a href="https://github.com/JBirdVegas/trump-time"><img
+        style="position: absolute; top: 0; right: 0; border: 0; width: 149px; height: 149px;"
+        src="github_banner.png" alt="Fork me on GitHub"></a>
+
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<h1>Countdown till Donald Trump leaves office</h1>
+<div id="tillOutOfOfficeCountDown">
+    <div>
+        <span class="years"></span>
+        <div class="smalltext">Years</div>
+    </div>
+    <div>
+        <span class="days"></span>
+        <div class="smalltext">Days</div>
+    </div>
+    <div>
+        <span class="hours"></span>
+        <div class="smalltext">Hours</div>
+    </div>
+    <div>
+        <span class="minutes"></span>
+        <div class="smalltext">Minutes</div>
+    </div>
+    <div>
+        <span class="seconds"></span>
+        <div class="smalltext">Seconds</div>
+    </div>
+</div>
+<br>
+<br>
+<h2 style="text-align: left">REST APIs Available</h2>
+<br>
+<h3 style="text-align: left">cURL:</h3>
+<pre style="text-align: left"><code class="prettyprint" id="cli_example">$ curl https://api.tilltrump.com
+President Donald Trump will leave office January 20th, 2021 at noon. This is only 1 year, 6 hours, 14 minutes and 53 seconds away!</code></pre>
+<script><![CDATA[
+(function () {
+    var doc = new XMLHttpRequest();
+    doc.onreadystatechange = function () {
+        if (doc.readyState === XMLHttpRequest.DONE) {
+            document.getElementById('cli_example').innerHTML = "$ curl https://api.tilltrump.com\n" + doc.responseText;
+        }
+    };
+    doc.open("get", document.URL);
+    doc.setRequestHeader("Content-Type", 'text/plain');
+    doc.send();
+})();
+]]>
+</script>
+
+<h3 style="text-align: left">Xml with cURL:</h3>
+<pre style="text-align: left"><code class="prettyprint" id="xml_doc_example">$ curl https://api.tilltrump.com/pretty -H "Accept: applicaiton/xml"
+&lt;?xml version="1.0" ?&gt;
+&lt;tillTrump&gt;
+	&lt;humanReadable&gt;President Donald Trump will leave office January 20th, 2021 at noon. This is only 1 year, 6 hours, 1 minutes and 23 seconds away!&lt;/humanReadable&gt;
+	&lt;years&gt;1&lt;/years&gt;
+	&lt;months&gt;6&lt;/months&gt;
+	&lt;days&gt;1&lt;/days&gt;
+	&lt;hours&gt;6&lt;/hours&gt;
+	&lt;minutes&gt;1&lt;/minutes&gt;
+	&lt;seconds&gt;23&lt;/seconds&gt;
+&lt;/tillTrump&gt;
+$ curl https://api.tilltrump.com -H "Accept: applicaiton/xml"
+&lt;tillTrump&gt;&lt;humanReadable&gt;President Donald Trump will leave office January 20th, 2021 at noon. This is only 1 year, 6 hours, 14 minutes and 32 seconds away!&lt;/humanReadable&gt;&lt;years&gt;1&lt;/years&gt;&lt;months&gt;6&lt;/months&gt;&lt;days&gt;1&lt;/days&gt;&lt;hours&gt;6&lt;/hours&gt;&lt;minutes&gt;14&lt;/minutes&gt;&lt;seconds&gt;32&lt;/seconds&gt;&lt;/tillTrump&gt;</code></pre>
+<script><![CDATA[
+(function () {
+    var doc = new XMLHttpRequest();
+    doc.onreadystatechange = function () {
+        if (doc.readyState === XMLHttpRequest.DONE) {
+            var xml = "$ curl https://api.tilltrump.com -H 'Content-Type: application/xml'\n" + doc.responseText;
+            document.getElementById('xml_doc_example').innerHTML = xml.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+    };
+    doc.open("get", document.URL);
+    doc.setRequestHeader("Content-Type", "application/xml");
+    doc.send();
+})();
+]]>
+</script>
+<h3 style="text-align: left">json with cURL:</h3>
+<pre style="text-align: left"><code class="prettyprint" id="json_example">$ curl https://api.tilltrump.com/pretty -H "Accept: applicaiton/json"
+{
+    "hours": 6,
+    "humanReadable": "President Donald Trump will leave office January 20th, 2021 at noon. This is only 1 year, 6 hours, 1 minutes and 28 seconds away!",
+    "minutes": 1,
+    "months": 6,
+    "seconds": 28,
+    "years": 1
+}
+$ curl https://api.tilltrump.com -H "Accept: applicaiton/json"
+{"humanReadable": "President Donald Trump will leave office January 20th, 2021 at noon. This is only 1 year, 6 hours, 14 minutes and 39 seconds away!", "years": 1, "months": 6, "hours": 6, "minutes": 14, "seconds": 39}</code></pre>
+<script><![CDATA[
+(function () {
+    var doc = new XMLHttpRequest();
+    doc.onreadystatechange = function () {
+        if (doc.readyState === XMLHttpRequest.DONE) {
+            document.getElementById('json_example').innerHTML = "$ curl https://api.tilltrump.com -H 'Content-Type: application/json'\n" + doc.responseText;
+        }
+    };
+    doc.open("get", document.URL);
+    doc.setRequestHeader("Content-Type", "application/json");
+    doc.send();
+})();
+]]>
+</script>
+
+<!--suppress JSCheckFunctionSignatures -->
+<script>
+    function getTimeRemaining(endTime) {
+        var t = Date.parse(endTime) - Date.parse(new Date());
+        var seconds = Math.floor((t / 1000) % 60);
+        var minutes = Math.floor((t / 1000 / 60) % 60);
+        var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        var days = Math.floor(t / (1000 * 60 * 60 * 24));
+        var years = Math.floor(t / (1000 * 60 * 60 * 24 * 365));
+        if (years > 0) {
+            days = days - (years * 365)
+        }
+        return {
+            'total': t,
+            'years': years,
+            'days': days,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
+        };
+    }
+
+    function initializeClock(id, endtime) {
+        var clock = document.getElementById(id);
+        var yearsSpan = clock.querySelector('.years');
+        var daysSpan = clock.querySelector('.days');
+        var hoursSpan = clock.querySelector('.hours');
+        var minutesSpan = clock.querySelector('.minutes');
+        var secondsSpan = clock.querySelector('.seconds');
+
+        function updateClock() {
+            var t = getTimeRemaining(endtime);
+            yearsSpan.innerHTML = '' + t.years;
+            if (t.years === 0) {
+                document.getElementById('tillOutOfOfficeCountDownYears').style.display = 'none';
+                yearsSpan.style.visibility = 'none'
+            }
+            daysSpan.innerHTML = t.days;
+            hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+            if (t.total <= 0) {
+                clearInterval(timeInterval);
+            }
+        }
+
+        updateClock();
+        var timeInterval = setInterval(updateClock, 1000);
+    }
+
+    var outOfOffice = new Date(2021, 0, 20, 12, 0, 0, 0);
+    initializeClock('tillOutOfOfficeCountDown', outOfOffice);
+</script>
+
+<!-- Google Analytics, JSUnresolvedFunction, JSValidateTypes -->
+<!--suppress CommaExpressionJS, JSUnresolvedFunction, JSValidateTypes -->
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-45204923-2', 'auto');
+    ga('send', 'pageview');
+</script>
+
+<!--<a href="http://petstore.swagger.io/?url=http://tilltrump.com/swagger">Swagger API Docs!</a> | <a-->
+<!--        href="http://online.swagger.io/validator/debug?url=http://tilltrump.com/swagger">Swagger API definition-->
+<!--    validator</a> | <a id="tweet_button" class="twitter-share-button" href="https://twitter.com/share"-->
+<!--                       data-size="large">Tweet</a>-->
+<script>
+    var doc = new XMLHttpRequest();
+    doc.onreadystatechange = function () {
+        if (doc.readyState === XMLHttpRequest.DONE) {
+            document.getElementById('tweet_button').setAttribute('href', doc.responseText)
+        }
+    };
+    doc.open("get", document.URL + "tweetLink");
+    doc.setRequestHeader("Content-Encoding", "UTF-8");
+    doc.send();
+</script>
+<script src="run_prettify.js"></script>
+</body>
+</html>
