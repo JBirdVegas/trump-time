@@ -99,6 +99,8 @@ json:
 xml:
 {make_xml_response(True)}
 {make_xml_response(False)}
+
+🖖
 """
     print(hello_world)
 
