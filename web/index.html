@@ -71,6 +71,8 @@
         document.getElementById("previous-pres-date").innerHTML = `Since last presidential inauguration (${tz}): ${prevPresDateValues}`;
         document.getElementById("time-left").innerHTML = stringify(nextPres);
         document.getElementById("since-previous").innerHTML = stringify(previousPres);
+        let hash = JSON.parse(gitRevision());
+        document.getElementById("githash").innerHTML = `git revision: ${hash.revision}`;
         window.setInterval(function () {
             document.getElementById("time-left").innerHTML = stringify(JSON.parse(nextPrez()));
             ;
@@ -78,5 +80,6 @@
         }, 1000)
     });
 </script>
+<div id="githash" class="bottom-right">...loading...</div>
 </body>
 </html>

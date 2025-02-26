@@ -2,12 +2,36 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/jbirdvegas/tilltrump.com/internal/timex"
+	"runtime/debug"
 	"syscall/js"
 	"time"
+
+	"github.com/jbirdvegas/tilltrump.com/internal/timex"
 )
 
 const layout = "Mon Jan 02 2006 03:04PM"
+
+type git struct {
+	Revision string `json:"revision"`
+}
+
+var (
+	NoBuildInfoGit = func() string {
+		g := git{Revision: "no_build_info"}
+		js, _ := json.Marshal(g)
+		return string(js)
+	}()
+	NotFoundGit = func() string {
+		g := git{Revision: "not_found"}
+		js, _ := json.Marshal(g)
+		return string(js)
+	}()
+	FoundGit = func(revision string) string {
+		g := git{Revision: revision}
+		js, _ := json.Marshal(g)
+		return string(js)
+	}
+)
 
 var (
 	sinceLocalizedDate = js.FuncOf(func(this js.Value, args []js.Value) any {
@@ -15,6 +39,19 @@ var (
 	})
 	tillLocalizedDate = js.FuncOf(func(this js.Value, args []js.Value) any {
 		return makeResponse(args, timex.DateOfPreviousPres())
+	})
+	githash = js.FuncOf(func(this js.Value, args []js.Value) any {
+		info, ok := debug.ReadBuildInfo()
+		if !ok {
+			return NoBuildInfoGit
+		}
+
+		for _, setting := range info.Settings {
+			if setting.Key == "vcs.revision" {
+				return FoundGit(setting.Value)
+			}
+		}
+		return NotFoundGit
 	})
 )
 
@@ -31,6 +68,7 @@ func main() {
 	}))
 	js.Global().Set("dateNextPrez", sinceLocalizedDate)
 	js.Global().Set("datePrevPrez", tillLocalizedDate)
+	js.Global().Set("gitRevision", githash)
 	<-make(chan struct{})
 }
 
