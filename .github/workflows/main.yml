@@ -32,6 +32,6 @@ jobs:
         uses: chrnorm/deployment-status@releases/v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          target_url: https://s3://tilltrump-web/website/${{steps.S3.outputs.object_key}}/index.html
+          target_url: https://${{ secrets.AWS_BUCKET }}.s3.amazonaws.com/${{ steps.S3.outputs.object_key }}/index.html
           state: 'success'
           deployment_id: ${{ steps.test.outputs.deployment_id }}
