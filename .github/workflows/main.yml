@@ -6,17 +6,6 @@ on:
       - master
 
 jobs:
-  preview:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: chrnorm/deployment-action@releases/v1
-        name: GitHub deployment
-        id: deployment
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          description: 'Preview my app'
-          environment: prd
   deploy:
     runs-on: ubuntu-latest
     environment: prd
@@ -32,21 +21,3 @@ jobs:
       - name: Sync files to S3 bucket
         run: |
           aws s3 cp ./web s3://tilltrump-web/website --recursive
-
-      - name: Update deployment status (success)
-        if: success()
-        uses: chrnorm/deployment-status@v2
-        with:
-          token: '${{ github.token }}'
-          environment-url: ${{ steps.deployment.outputs.environment_url }}
-          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
-          state: 'success'
-
-      - name: Update deployment status (failure)
-        if: failure()
-        uses: chrnorm/deployment-status@v2
-        with:
-          token: '${{ github.token }}'
-          environment-url: ${{ steps.deployment.outputs.environment_url }}
-          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
-          state: 'failure'
