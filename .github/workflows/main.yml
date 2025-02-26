@@ -16,7 +16,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN}}
           description: 'Preview my app'
-          environment: preview
+          environment: prd
 
       - uses: shallwefootball/s3-upload-action@master
         name: Upload S3
