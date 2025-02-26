@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>TillTrump leaves office</title>
+    <script src="wasm_exec.js"></script>
+    <link rel="stylesheet" href="index.css">
+    <link rel="shortcut icon" type="image/png" href="trump-icon.png">
+</head>
+
+<body>
+<script>
+    if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
+        let script = document.createElement("script");
+        script.async = true;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-H43GPMT9ZL"
+        document.body.appendChild(script);
+        window.dataLayer = window.dataLayer || [];
+        dataLayer.push("js", new Date());
+        dataLayer.push('config', 'G-H43GPMT9ZL');
+    }
+</script>
+<h1>Count down till Trump leaves office</h1>
+<div><img src="trump-icon.png" alt="Trump icon"></div>
+<div id="root">
+    <h2 id="time-left"></h2>
+    <p>
+    <div id="next-pres-date"></div>
+    </p>
+    <h2 id="since-previous"></h2>
+    <p>
+    <div id="previous-pres-date"></div>
+    </p>
+</div>
+<script>
+    const go = new Go();
+    const source = fetch("till_trump.wasm");
+
+    function stringify(obj) {
+        let out = []
+        if (obj.years > 0) {
+            out.push(obj.years + " years")
+        }
+        if (obj.months > 0) {
+            out.push(obj.months + " months")
+        }
+        if (obj.days > 0) {
+            out.push(obj.days + " days")
+        }
+        if (obj.minutes > 0) {
+            out.push(obj.minutes + " minutes")
+        }
+        if (obj.seconds > 0) {
+            out.push(obj.seconds + " seconds")
+        }
+        return out.join(", ")
+
+    }
+
+    WebAssembly.instantiateStreaming(source, go.importObject).then((result) => {
+        go.run(result.instance);
+        let tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+        let nextPresDate = dateNextPrez(tz, new Date().getTimezoneOffset());
+        let nextPresDateValues = JSON.parse(nextPresDate).date;
+        let nextPres = JSON.parse(nextPrez());
+
+        let prevPresDate = datePrevPrez(tz, new Date().getTimezoneOffset());
+        let prevPresDateValues = JSON.parse(prevPresDate).date;
+        let previousPres = JSON.parse(previousPrez());
+        document.getElementById("next-pres-date").innerHTML = `Next presidential inauguration (${tz}): ${nextPresDateValues}`;
+        document.getElementById("previous-pres-date").innerHTML = `Since last presidential inauguration (${tz}): ${prevPresDateValues}`;
+        document.getElementById("time-left").innerHTML = stringify(nextPres);
+        document.getElementById("since-previous").innerHTML = stringify(previousPres);
+        window.setInterval(function () {
+            document.getElementById("time-left").innerHTML = stringify(JSON.parse(nextPrez()));
+            ;
+            document.getElementById("since-previous").innerHTML = stringify(JSON.parse(previousPrez()));
+        }, 1000)
+    });
+</script>
+</body>
+</html>
