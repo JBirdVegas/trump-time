@@ -11,10 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: chrnorm/deployment-action@releases/v1
-        name: Create GitHub deployment
-        id: test
+        name: GitHub deployment
+        id: deployment
         with:
-          token: ${{ secrets.GITHUB_TOKEN}}
+          token: ${{ secrets.GITHUB_TOKEN }}
           description: 'Preview my app'
           environment: prd
   deploy:
@@ -35,9 +35,18 @@ jobs:
 
       - name: Update deployment status (success)
         if: success()
-        uses: chrnorm/deployment-status@releases/v1
+        uses: chrnorm/deployment-status@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          target_url: https://${{ secrets.AWS_BUCKET }}.s3.amazonaws.com/${{ steps.S3.outputs.object_key }}/index.html
+          token: '${{ github.token }}'
+          environment-url: ${{ steps.deployment.outputs.environment_url }}
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
           state: 'success'
-          deployment_id: ${{ steps.test.outputs.deployment_id }}
+
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          environment-url: ${{ steps.deployment.outputs.environment_url }}
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          state: 'failure'
